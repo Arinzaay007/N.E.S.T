@@ -36,10 +36,36 @@ jobs:
           workspaces: contracts/nest-registry
 
       - name: Run contract unit tests
-        run: cargo test --locked || cargo test
+        shell: bash
+        run: |
+          set +e
+          if [ -f Cargo.lock ]; then
+            cargo test --locked 2>&1 | tee cargo-test.log
+          else
+            cargo test 2>&1 | tee cargo-test.log
+          fi
+          status=${PIPESTATUS[0]}
+          {
+            echo '## Cargo test output (last 240 lines)'
+            echo '```text'
+            tail -n 240 cargo-test.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
 
       - name: Build release WASM
-        run: cargo build --target wasm32-unknown-unknown --release
+        shell: bash
+        run: |
+          set +e
+          cargo build --target wasm32-unknown-unknown --release 2>&1 | tee cargo-build.log
+          status=${PIPESTATUS[0]}
+          {
+            echo '## Cargo WASM build output (last 160 lines)'
+            echo '```text'
+            tail -n 160 cargo-build.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit "$status"
 
       - name: Upload WASM artifact
         uses: actions/upload-artifact@v4
