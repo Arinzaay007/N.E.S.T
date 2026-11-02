@@ -12,7 +12,7 @@ NEST gives a creator, merchant, freelancer or small team one payable **@handle**
 
 | Layer | Bit 1 status |
 |---|---|
-| Product app | ✅ Runnable locally: email sign-in, wallet creation, handle claim, pay pages, invoices, QR codes, batch payroll, receipts and CSV export |
+| Product app | ✅ Runnable locally and deployed on Vercel: email sign-in, wallet creation, handle claim, pay pages, invoices, QR codes, batch payroll, receipts and CSV export |
 | Money/name logic | ✅ Pure TypeScript libraries with unit tests |
 | Wallet model | ✅ Real ed25519 key generation; private key encrypted with AES-256-GCM before storage |
 | Ledger | ⚠️ Local prototype ledger in `.data/` for zero-infrastructure judging |
