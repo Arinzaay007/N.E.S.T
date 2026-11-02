@@ -53,16 +53,20 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
           exit "$status"
 
-      - name: Build release WASM
+      - name: Install cargo-near
+        shell: bash
+        run: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/near/cargo-near/releases/download/cargo-near-v0.22.0/cargo-near-installer.sh | sh
+
+      - name: Build release WASM with cargo-near
         shell: bash
         run: |
           set +e
-          cargo build --target wasm32-unknown-unknown --release 2>&1 | tee cargo-build.log
+          cargo near build non-reproducible-wasm --no-abi 2>&1 | tee cargo-near-build.log
           status=${PIPESTATUS[0]}
           {
-            echo '## Cargo WASM build output (last 160 lines)'
+            echo '## cargo-near WASM build output (last 200 lines)'
             echo '```text'
-            tail -n 160 cargo-build.log
+            tail -n 200 cargo-near-build.log
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           exit "$status"
@@ -71,5 +75,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nest-registry-wasm
-          path: contracts/nest-registry/target/wasm32-unknown-unknown/release/nest_registry.wasm
+          path: contracts/nest-registry/target/near/*.wasm
           if-no-files-found: error
