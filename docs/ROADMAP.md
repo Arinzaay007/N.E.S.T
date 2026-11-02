@@ -16,19 +16,19 @@ NEST is being built **bit by bit**. Each gate must pass before the next claim is
 - [x] Unit tests for money, handles, batches and quote math
 - [ ] User acceptance pass in the live preview
 
-## Bit 2 — Real-integration scaffolding (local)
+## Bit 2 — Real-integration scaffolding
 
 - [x] Read-only NEAR RPC library and `/api/near/status` readiness endpoint
 - [x] Registry/USDC account, balance and storage checks without signing
 - [x] Dry-only 1Click verifier for live assets plus dry exact-output quotes
-- [x] GitHub Actions workflow prepared to run Cargo tests and build the WASM artifact
-- [ ] Human approves pushing Bit 2 so contract CI can run
+- [x] GitHub Actions runs Cargo unit tests, builds the registry WASM with `cargo-near`, and uploads the artifact
+- [x] Bit 2 pushed and contract CI passed ([run 41438795901](https://github.com/Arinzaay007/N.E.S.T/actions/runs/41438795901))
 - [ ] Human provides public testnet and dry-quote verification account IDs
 
 ## Gate A — NEAR toolchain and testnet registry
 
-- [ ] Install Rust, `wasm32-unknown-unknown`, and NEAR CLI in a suitable environment.
-- [ ] Run `cargo test` and build the registry WASM.
+- [x] Run `cargo test` and build the registry WASM in GitHub Actions.
+- [ ] Install Rust, `wasm32-unknown-unknown`, `cargo-near`, and NEAR CLI in the human's local signing environment.
 - [ ] Deploy only to NEAR testnet with a human-confirmed deployer account.
 - [ ] Verify handle registration, duplicate rejection and reverse resolution.
 - [ ] Verify validated USDC-style `ft_transfer_call` routing, sponsor slice, unknown-handle refund and emitted events.

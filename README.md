@@ -27,7 +27,7 @@ The hosted deployment is the Bit 1 prototype described below. Cross-chain quotes
 | Ledger | ⚠️ Prototype ledger (`.data/` locally, `/tmp/nest-data` on Vercel) for zero-infrastructure judging; not production persistence |
 | Cross-chain quotes | ⚠️ Exact-output quote UX, token lookup and dry-route verification implemented; live settlement remains guarded/off by default and quotes are **SIMULATED** unless explicitly labelled live |
 | NEAR reads | ⚠️ Read-only RPC readiness, registry resolution and USDC balance/storage checks implemented; no app signing yet |
-| NEAR contract | ⚠️ Rust registry/payment-router source and CI workflow included; not compiled or deployed in this sandbox because Rust/NEAR CLI are unavailable |
+| NEAR contract | ⚠️ Rust unit tests and the `cargo-near` WASM build pass in GitHub Actions; the contract is not deployed yet and app writes are not wired to it |
 | Mainnet proof | ⛔ Not yet executed; requires explicit human approval, accounts and route verification |
 
 Do not send real funds to a simulated deposit address.
@@ -148,7 +148,7 @@ Key seams:
 - `src/lib/oneClick.ts` — guarded live 1Click token discovery, quote and status adapter.
 - `src/lib/crypto.ts` — AES-256-GCM, hashed OTP support, signed tokens and NEAR implicit-account key generation.
 - `src/lib/db.ts` — prototype ledger boundary intended to be replaced by Postgres + chain indexer.
-- `contracts/nest-registry` — NEAR handle registry and validated USDC `ft_on_transfer` payment router source.
+- `contracts/nest-registry` — NEAR handle registry and validated USDC `ft_on_transfer` payment router; unit-tested and WASM-built in GitHub Actions, deployment pending.
 
 Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the production migration path.
 

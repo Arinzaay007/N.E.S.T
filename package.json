@@ -13,7 +13,7 @@
     "near:preflight": "node scripts/near-preflight.mjs",
     "routes:verify": "node scripts/verify-1click-routes.mjs",
     "contract:test": "cargo test --manifest-path contracts/nest-registry/Cargo.toml",
-    "contract:build": "cargo build --manifest-path contracts/nest-registry/Cargo.toml --target wasm32-unknown-unknown --release"
+    "contract:build": "cargo near build non-reproducible-wasm --no-abi --manifest-path contracts/nest-registry/Cargo.toml"
   },
   "dependencies": {
     "next": "^15.5.28",

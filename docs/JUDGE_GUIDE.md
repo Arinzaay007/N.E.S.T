@@ -73,6 +73,6 @@ Use the on-screen OTP while `NEST_DEMO_OTP` is enabled.
 
 - Local JSON ledger, not Postgres/indexer-backed production settlement.
 - Simulated cross-chain settlement by default.
-- Rust contract source is not compiled/deployed in the current sandbox.
+- Rust contract tests and the `cargo-near` WASM build pass in GitHub Actions, but the contract is not deployed yet; testnet/mainnet transaction proof is still pending.
 - Key export, session/device revocation and step-up re-auth are specified production gates, not finished features.
 - No mainnet transaction has been signed or spent.

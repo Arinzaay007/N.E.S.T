@@ -1,6 +1,6 @@
 # NEST Registry Contract (NEAR / Rust)
 
-Status: **source included; not deployed in Bit 1**. The current sandbox does not provide Rust or the NEAR CLI, so compilation/deployment must be verified in the follow-up toolchain gate. No contract address or on-chain volume is claimed until that gate passes.
+Status: **CI-verified source; not deployed yet**. GitHub Actions [run 41438795901](https://github.com/Arinzaay007/N.E.S.T/actions/runs/41438795901) passed the Rust unit tests and `cargo-near` WASM build at commit `e40c034cba6a655a9f5299c52ec3070e353fe487`, uploading the `nest-registry-wasm` artifact. That compile proof is separate from deployment: no contract address, testnet transaction, mainnet transaction, or on-chain volume is claimed until human-local deployment evidence exists.
 
 ## What it does
 
@@ -35,13 +35,24 @@ Token amounts are raw smallest units. For a 6-decimal USDC token, `10000000` is 
 4. The indexer observes `handle_registered`, and the app resolves the handle from chain state.
 5. Senders call USDC `ft_transfer_call` to this contract; the indexer observes `payment_settled`.
 
-## Build and test (when Rust is available)
+## Build and test
+
+Install Rust, the NEAR WASM target, and `cargo-near`, then run:
 
 ```bash
 rustup target add wasm32-unknown-unknown
+cargo install --locked cargo-near
 cargo test
-cargo build --target wasm32-unknown-unknown --release
+cargo near build non-reproducible-wasm --no-abi
 ```
+
+Expected WASM output:
+
+```text
+target/near/nest_registry.wasm
+```
+
+The repository root also exposes `npm run contract:test` and `npm run contract:build` wrappers for these commands.
 
 ## Deployment inputs still required
 

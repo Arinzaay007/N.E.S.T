@@ -9,14 +9,15 @@ This runbook turns the Bit 1 prototype into verifiable NEAR and cross-chain inte
 - `scripts/near-preflight.mjs` — CLI version of the same public checks; no keys accepted.
 - `scripts/verify-1click-routes.mjs` — dry-only route verifier. It hard-codes `dry: true`, checks exact live 1Click assets, then submits dry `EXACT_OUTPUT` quotes.
 - Updated 1Click adapter — shared live-token lookup, exact-output request builder, dry verification helper, Partner API-key/JWT header support, and status polling with optional deposit memo.
-- `.github/workflows/contract-ci.yml` — after an approved push, GitHub Actions can run Rust unit tests and build the registry WASM in an environment with crates access.
+- `.github/workflows/contract-ci.yml` — GitHub Actions runs Rust unit tests, installs pinned `cargo-near`, builds the registry WASM, and uploads it as a workflow artifact.
 
-## Gate A — Compile the registry
+## Gate A — Compile the registry ✅
 
-Locally, where Rust is installed:
+Locally, where Rust and `cargo-near` are installed:
 
 ```bash
 rustup target add wasm32-unknown-unknown
+cargo install --locked cargo-near
 npm run contract:test
 npm run contract:build
 ```
@@ -24,10 +25,10 @@ npm run contract:build
 Expected artifact:
 
 ```text
-contracts/nest-registry/target/wasm32-unknown-unknown/release/nest_registry.wasm
+contracts/nest-registry/target/near/nest_registry.wasm
 ```
 
-The current Arena sandbox has no `cargo`, `rustc`, or `near` binary and cannot download the Rust toolchain/crates. Therefore local success in this sandbox is **not** contract-compile proof. The GitHub workflow is the next proof point after the human approves pushing Bit 2.
+CI proof recorded on 2 Nov 2026: [GitHub Actions run 41438795901](https://github.com/Arinzaay007/N.E.S.T/actions/runs/41438795901) at commit `e40c034cba6a655a9f5299c52ec3070e353fe487` passed **Run contract unit tests**, **Build release WASM with cargo-near**, and **Upload WASM artifact**. The uploaded `nest-registry-wasm` artifact is ID `13138296312` (75,658-byte ZIP). This proves contract test/WASM compilation only; it does **not** prove deployment, testnet behavior, sponsor/delegate execution, or mainnet readiness.
 
 ## Gate B — Testnet deployment (human signs locally)
 
@@ -45,7 +46,7 @@ Illustrative NEAR CLI RS flow — verify syntax with the installed CLI's `--help
 
 ```bash
 near contract deploy "$REGISTRY_ID" use-file \
-  contracts/nest-registry/target/wasm32-unknown-unknown/release/nest_registry.wasm \
+  contracts/nest-registry/target/near/nest_registry.wasm \
   with-init-call new json-args \
   "{\"owner_id\":\"$OWNER_ID\",\"sponsor_id\":\"$SPONSOR_ID\",\"usdc_id\":\"$TEST_TOKEN_ID\",\"network_fee\":\"10000\"}" \
   prepaid-gas '100 TeraGas' attached-deposit '0 NEAR' \
