@@ -3,7 +3,7 @@ use near_sdk::json_types::U128;
 use near_sdk::serde::{Deserialize, Serialize};
 use near_sdk::store::LookupMap;
 use near_sdk::{
-    env, ext_contract, near_bindgen, AccountId, BorshStorageKey, Gas, NearToken, PanicOnDefault,
+    env, ext_contract, near, AccountId, BorshStorageKey, Gas, NearToken, PanicOnDefault,
     PromiseError, PromiseOrValue,
 };
 
@@ -71,9 +71,8 @@ pub trait FungibleToken {
     fn ft_transfer(&mut self, receiver_id: AccountId, amount: U128, memo: Option<String>);
 }
 
-#[near_bindgen]
-#[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
-#[borsh(crate = "near_sdk::borsh")]
+#[derive(PanicOnDefault)]
+#[near(contract_state)]
 pub struct Contract {
     owner_id: AccountId,
     sponsor_id: AccountId,
@@ -96,7 +95,7 @@ fn validate_handle(handle: &str) -> bool {
         && !RESERVED_HANDLES.contains(&handle)
 }
 
-#[near_bindgen]
+#[near]
 impl Contract {
     #[init]
     pub fn new(
