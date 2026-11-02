@@ -1,0 +1,49 @@
+name: NEAR contract CI
+
+on:
+  pull_request:
+    paths:
+      - "contracts/**"
+      - ".github/workflows/contract-ci.yml"
+  push:
+    paths:
+      - "contracts/**"
+      - ".github/workflows/contract-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-build:
+    name: Test and build registry WASM
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: contracts/nest-registry
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust and NEAR WASM target
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: contracts/nest-registry
+
+      - name: Run contract unit tests
+        run: cargo test --locked || cargo test
+
+      - name: Build release WASM
+        run: cargo build --target wasm32-unknown-unknown --release
+
+      - name: Upload WASM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nest-registry-wasm
+          path: contracts/nest-registry/target/wasm32-unknown-unknown/release/nest_registry.wasm
+          if-no-files-found: error

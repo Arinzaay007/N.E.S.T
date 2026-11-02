@@ -9,7 +9,11 @@
     "start": "next start -H 0.0.0.0 -p 3000",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "near:preflight": "node scripts/near-preflight.mjs",
+    "routes:verify": "node scripts/verify-1click-routes.mjs",
+    "contract:test": "cargo test --manifest-path contracts/nest-registry/Cargo.toml",
+    "contract:build": "cargo build --manifest-path contracts/nest-registry/Cargo.toml --target wasm32-unknown-unknown --release"
   },
   "dependencies": {
     "next": "^15.5.28",

@@ -16,6 +16,15 @@ NEST is being built **bit by bit**. Each gate must pass before the next claim is
 - [x] Unit tests for money, handles, batches and quote math
 - [ ] User acceptance pass in the live preview
 
+## Bit 2 — Real-integration scaffolding (local)
+
+- [x] Read-only NEAR RPC library and `/api/near/status` readiness endpoint
+- [x] Registry/USDC account, balance and storage checks without signing
+- [x] Dry-only 1Click verifier for live assets plus dry exact-output quotes
+- [x] GitHub Actions workflow prepared to run Cargo tests and build the WASM artifact
+- [ ] Human approves pushing Bit 2 so contract CI can run
+- [ ] Human provides public testnet and dry-quote verification account IDs
+
 ## Gate A — NEAR toolchain and testnet registry
 
 - [ ] Install Rust, `wasm32-unknown-unknown`, and NEAR CLI in a suitable environment.

@@ -25,8 +25,9 @@ The hosted deployment is the Bit 1 prototype described below. Cross-chain quotes
 | Money/name logic | ✅ Pure TypeScript libraries with unit tests |
 | Wallet model | ✅ Real ed25519 key generation; private key encrypted with AES-256-GCM before storage |
 | Ledger | ⚠️ Prototype ledger (`.data/` locally, `/tmp/nest-data` on Vercel) for zero-infrastructure judging; not production persistence |
-| Cross-chain quotes | ⚠️ Exact-output quote UX implemented; quotes are **SIMULATED** unless the guarded 1Click mode succeeds and is labelled live |
-| NEAR contract | ⚠️ Rust registry/payment-router source included; not compiled or deployed in this sandbox because Rust/NEAR CLI are unavailable |
+| Cross-chain quotes | ⚠️ Exact-output quote UX, token lookup and dry-route verification implemented; live settlement remains guarded/off by default and quotes are **SIMULATED** unless explicitly labelled live |
+| NEAR reads | ⚠️ Read-only RPC readiness, registry resolution and USDC balance/storage checks implemented; no app signing yet |
+| NEAR contract | ⚠️ Rust registry/payment-router source and CI workflow included; not compiled or deployed in this sandbox because Rust/NEAR CLI are unavailable |
 | Mainnet proof | ⛔ Not yet executed; requires explicit human approval, accounts and route verification |
 
 Do not send real funds to a simulated deposit address.
@@ -194,6 +195,7 @@ The final scan must return no project-content hits before a commit, push or subm
 
 - [Judge guide](docs/JUDGE_GUIDE.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [Real integration runbook](docs/REAL_INTEGRATION.md)
 - [Testing](docs/TESTING.md)
 - [Roadmap and verification gates](docs/ROADMAP.md)
 - [Contract README](contracts/nest-registry/README.md)
