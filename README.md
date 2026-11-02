@@ -8,6 +8,15 @@ NEST gives a creator, merchant, freelancer or small team one payable **@handle**
 
 > NEST is where money from every chain comes home.
 
+## Live demo
+
+- **App:** https://nest-near-settlements.vercel.app
+- **Merchant page:** https://nest-near-settlements.vercel.app/@mystore
+- **Sample invoice:** https://nest-near-settlements.vercel.app/pay/link_seed_invoice
+- **Source branch:** https://github.com/Arinzaay007/N.E.S.T/tree/arena/64a02649-n-e-s-t
+
+The hosted deployment is the Bit 1 prototype described below. Cross-chain quotes remain simulated unless the UI explicitly labels a guarded 1Click quote as live.
+
 ## Current build status
 
 | Layer | Bit 1 status |
@@ -15,7 +24,7 @@ NEST gives a creator, merchant, freelancer or small team one payable **@handle**
 | Product app | ✅ Runnable locally and deployed on Vercel: email sign-in, wallet creation, handle claim, pay pages, invoices, QR codes, batch payroll, receipts and CSV export |
 | Money/name logic | ✅ Pure TypeScript libraries with unit tests |
 | Wallet model | ✅ Real ed25519 key generation; private key encrypted with AES-256-GCM before storage |
-| Ledger | ⚠️ Local prototype ledger in `.data/` for zero-infrastructure judging |
+| Ledger | ⚠️ Prototype ledger (`.data/` locally, `/tmp/nest-data` on Vercel) for zero-infrastructure judging; not production persistence |
 | Cross-chain quotes | ⚠️ Exact-output quote UX implemented; quotes are **SIMULATED** unless the guarded 1Click mode succeeds and is labelled live |
 | NEAR contract | ⚠️ Rust registry/payment-router source included; not compiled or deployed in this sandbox because Rust/NEAR CLI are unavailable |
 | Mainnet proof | ⛔ Not yet executed; requires explicit human approval, accounts and route verification |
