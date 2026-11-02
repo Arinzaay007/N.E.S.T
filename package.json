@@ -1,0 +1,31 @@
+{
+  "name": "nest",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NEST — NEAR Enabled Settlement & Transfers. One handle for tips, merchant payments, invoicing and payroll.",
+  "scripts": {
+    "dev": "next dev -H 0.0.0.0 -p 3000",
+    "build": "next build",
+    "start": "next start -H 0.0.0.0 -p 3000",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "next": "^15.5.28",
+    "qrcode": "1.5.4",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.9.2",
+    "vitest": "^4.1.12"
+  },
+  "overrides": {
+    "postcss": "^8.5.32"
+  }
+}
